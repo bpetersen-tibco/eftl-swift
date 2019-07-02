@@ -61,7 +61,7 @@ open class EftlOptions {
     public let sslAllowUntrustedCertificates: Bool
     
     /// The device token with which to receive remote notifications from APNs.
-    public let deviceToken: String?
+    public let deviceToken: Data?
     
     /// Initialize Eftl options.
     public init(username: String? = nil, password: String? = nil,
@@ -368,7 +368,7 @@ open class Eftl {
         json["password"] = options.password
         // device token for APNs notifications
         if let deviceToken = options.deviceToken, deviceToken.count > 0 {
-            json["notification_token"] = options.deviceToken
+            json["notification_token"] = options.deviceToken.hexString
             json["notification_type"] = "apns"
         }
         webSocketWrite(json)
@@ -981,5 +981,12 @@ extension URL {
         return queryItems.reduce(into: [String: String]()) { (result, item) in
             result[item.name] = item.value
         }
+    }
+}
+
+extension Data {
+    var hexString: String {
+        let hexString = map { String(format: "%02.2hhx", $0) }.joined()
+        return hexString
     }
 }
