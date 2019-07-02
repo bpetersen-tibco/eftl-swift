@@ -60,16 +60,21 @@ open class EftlOptions {
     /// Set this when testing with self signed certificates.
     public let sslAllowUntrustedCertificates: Bool
     
+    /// The device token with which to receive remote notifications from APNs.
+    public let deviceToken: String?
+    
     /// Initialize Eftl options.
     public init(username: String? = nil, password: String? = nil,
                 reconnectMaxAttempts: Int = 5, reconnectMaxInterval: TimeInterval = 30,
-                sslTrustedCertificates: [Data]? = nil, sslAllowUntrustedCertificates: Bool = false) {
+                sslTrustedCertificates: [Data]? = nil, sslAllowUntrustedCertificates: Bool = false,
+                deviceToken: String? = nil) {
         self.username = username
         self.password = password
         self.reconnectMaxAttempts = reconnectMaxAttempts
         self.reconnectMaxInterval = reconnectMaxInterval
         self.sslTrustedCertificates = sslTrustedCertificates
         self.sslAllowUntrustedCertificates = sslAllowUntrustedCertificates
+        self.deviceToken = deviceToken
     }
 }
 
@@ -361,6 +366,11 @@ open class Eftl {
         json["id_token"] = token
         json["user"] = options.username
         json["password"] = options.password
+        // device token for APNs notifications
+        if let deviceToken = options.deviceToken, deviceToken.count > 0 {
+            json["notification_token"] = options.deviceToken
+            json["notification_type"] = "apns"
+        }
         webSocketWrite(json)
     }
     
