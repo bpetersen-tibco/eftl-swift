@@ -67,7 +67,7 @@ open class EftlOptions {
     public init(username: String? = nil, password: String? = nil,
                 reconnectMaxAttempts: Int = 5, reconnectMaxInterval: TimeInterval = 30,
                 sslTrustedCertificates: [Data]? = nil, sslAllowUntrustedCertificates: Bool = false,
-                deviceToken: String? = nil) {
+                deviceToken: Data? = nil) {
         self.username = username
         self.password = password
         self.reconnectMaxAttempts = reconnectMaxAttempts
