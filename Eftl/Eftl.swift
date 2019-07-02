@@ -368,7 +368,7 @@ open class Eftl {
         json["password"] = options.password
         // device token for APNs notifications
         if let deviceToken = options.deviceToken, deviceToken.count > 0 {
-            json["notification_token"] = options.deviceToken.hexString
+            json["notification_token"] = deviceToken.hexString
             json["notification_type"] = "apns"
         }
         webSocketWrite(json)
