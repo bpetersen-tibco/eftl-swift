@@ -357,7 +357,12 @@ open class Eftl {
     }
     
     private func onConnect() {
-        let opts: JsonType = ["_qos": "true", "_resume": "true"]
+        var opts: JsonType = ["_qos": "true", "_resume": "true"]
+        // device token for APNs notifications
+        if let deviceToken = options.deviceToken {
+            opts["notification_token"] = deviceToken.hexString
+            opts["notification_type"] = "apns"
+        }
         var json: JsonType = ["op": OpCode.login.rawValue,
                               "client_type": "swift",
                               "client_version": Eftl.version,
@@ -366,11 +371,6 @@ open class Eftl {
         json["id_token"] = token
         json["user"] = options.username
         json["password"] = options.password
-        // device token for APNs notifications
-        if let deviceToken = options.deviceToken, deviceToken.count > 0 {
-            json["notification_token"] = deviceToken.hexString
-            json["notification_type"] = "apns"
-        }
         webSocketWrite(json)
     }
     
