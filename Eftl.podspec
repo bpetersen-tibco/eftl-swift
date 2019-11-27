@@ -6,7 +6,8 @@ Pod::Spec.new do |spec|
   spec.author        = { "Brent Petersen" => "bpeterse@tibco.com" }
   spec.homepage      = "https://github.com/bpetersen-tibco/eftl-swift"
   spec.license       = "MIT"
-  spec.platform      = :ios, "9.0"
+  spec.ios.deployment_target = "9.0"
+  spec.osx.deployment_target = "10.10"
   spec.source        = { :git => "https://github.com/bpetersen-tibco/eftl-swift.git", :tag => "#{spec.version}" }
   spec.source_files  = "Eftl"
   spec.swift_version = "5.0"
